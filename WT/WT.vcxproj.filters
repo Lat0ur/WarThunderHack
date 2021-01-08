@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="rD3D11">
+      <UniqueIdentifier>{32d5d4ed-875b-463f-9545-2b29f9453cdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="w2sAndUtils">
+      <UniqueIdentifier>{a6c1b8a6-067e-4b7d-8e4c-351c6684d135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="drawStuff">
+      <UniqueIdentifier>{0fe2f425-18aa-418b-85bd-cf5c1ca2ff66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fonts">
+      <UniqueIdentifier>{7b3c9116-d843-4b90-8e65-fa9d8cd40823}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="coreNotGameSpecific.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rD3D11.cpp">
+      <Filter>rD3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="w2sAndUtils.cpp">
+      <Filter>w2sAndUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="drawStuff.cpp">
+      <Filter>drawStuff</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="coreNotGameSpecific.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="offsets.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rD3D11.h">
+      <Filter>rD3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="w2sAndUtils.h">
+      <Filter>w2sAndUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="drawStuff.h">
+      <Filter>drawStuff</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Fonts\comic_sans_ms_16.spritefont">
+      <Filter>Fonts</Filter>
+    </None>
+  </ItemGroup>
+</Project>
