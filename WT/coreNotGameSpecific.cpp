@@ -1,10 +1,12 @@
 #include "coreNotGameSpecific.h"
 #include "stdio.h"
+#include "d3d11hook.h"
 
-void detach(HMODULE dllHandle) {
+void deattach(HMODULE dllHandle) {
     //printf("cleanupHook...\r\n");
     //CleanupD3D();
     printf("detaching...\r\n");
+    //HookDX11_Release();
     FreeLibraryAndExitThread(dllHandle, 0);
 }
 

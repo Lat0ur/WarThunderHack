@@ -1,46 +1,53 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include <Windows.h>
 #include <stdio.h>
-#include "coreNotGameSpecific.h"
 #include "offsets.h"
+#include "d3d11hook.h"
+#include "coreNotGameSpecific.h"
 #include "rD3D11.h"
+#include "d3d11hook.h"
+#include "ESP.h"
 
-rD3D11 rd3d11;
+#pragma comment(lib, "libMinHook-x64-v140-mdd.lib")
 
-HRESULT __stdcall hookedPresent(IDXGISwapChain* pThis, UINT SyncInterval, UINT Flags)
-{
-    if (!rd3d11.pDevice)
-        rd3d11.InitD3DHook(pThis);
+MasterClass MC;
 
-    //enable this to test or debug viewport
-    rd3d11.Render();
+void mainCheatThread(uintptr_t exeBase, uintptr_t playerListBase, HMODULE dllHandle) {
+    printf("mainCheatThread()\r\n");
 
-    return rd3d11.ogPresentTramp(pThis, SyncInterval, Flags);
-}
-
-void mainCheatStuff(uintptr_t exeBase, uintptr_t playerListBase, HMODULE dllHandle) {
-    rd3d11.installD3DHook();
     
-    while (!GetAsyncKeyState(VK_END))
-        Sleep(10);
+    
+    while (true){
+        if (GetAsyncKeyState(VK_DELETE))
+            break;
+        if (GetAsyncKeyState(VK_F9))
+            esp.drawTracers != esp.drawTracers;
+        esp.update();
+        Sleep(5);
+    }
 
-    rd3d11.CleanupD3D();
+    mainDettach(dllHandle);
+
     return;
 }
 
 DWORD WINAPI Main(HMODULE dllHandle) {
+
+    MC.InitD3DHook(dllHandle);
+
     allocConsole();
-    uintptr_t exeBase = (uintptr_t) GetModuleHandleA("aces.exe");
-    printf("exeBase at %llx\r\n", exeBase);
-    uintptr_t playerListBase = *(uintptr_t*)(exeBase + playerListOffset);
+
+    MC.exeBase = (uintptr_t) GetModuleHandleA("aces.exe");
+    printf("exeBase at %llx\r\n", MC.exeBase);
+
+    uintptr_t playerListBase = *(uintptr_t*)(MC.exeBase + playerListOffset);
     printf("playerListBase at %llx\r\n", playerListBase);
 
-    uintptr_t d3d11 = (uintptr_t)GetModuleHandleA("d3d11.dll");
-    printf("d3d11 at %llx\r\n", d3d11);
+    MC.viewMatrix = MC.exeBase + viewMatrixOffset;
+    printf("rd3d11.viewMatrix at %llx\r\n", MC.viewMatrix);
+    
+    mainCheatThread(MC.exeBase, playerListBase, dllHandle);
 
-    mainCheatStuff(exeBase, playerListBase, dllHandle);
-
-    detach(dllHandle);
     return 0;
 }
 
@@ -49,6 +56,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
                        LPVOID lpReserved) {
     switch (ul_reason_for_call) {
     case DLL_PROCESS_ATTACH:       
+        DisableThreadLibraryCalls(hModule);
         CreateThread(0, 0, (LPTHREAD_START_ROUTINE)Main, hModule, 0, 0);
         break;
     case DLL_THREAD_ATTACH:

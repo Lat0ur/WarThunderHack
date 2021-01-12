@@ -1,7 +1,8 @@
 #pragma once
 #include <Windows.h>
 #include <cmath>
-
+#include <DirectXMath.h>
+#include "imgui.h"
 
 #define P(x) (intptr_t*)x
 #define I(x) (intptr_t)x
@@ -44,6 +45,10 @@ public:
 	float Length() const { return sqrtf(dot()); }
 	vec3 Normalize() const { return *this * (1 / Length()); }
 	float Distance(const vec3& rhs) const { return (*this - rhs).Length(); }
+	/*vec3 calcAngle(vec3& source, vec3& target) {
+		vec3 angle = { 0, 0, 0 };
+		angle.x = atan2(sqrt ())
+	}*/
 };
 
 using Vector3 = vec3;
@@ -54,8 +59,15 @@ typedef struct {
 	float element[4][4];
 } Matrix44;
 
+
 struct D3DX11Matricies {
-	Matrix44 ViewMatrix;
-	Matrix44 WorldMatrix;
-	Matrix44 ProjectionMatrix;
+	DirectX::XMMATRIX ViewMatrix;
+	DirectX::XMMATRIX WorldMatrix;
+	DirectX::XMMATRIX ProjectionMatrix;
 };
+
+bool WorldToScreen_(vec3 worldPos, float* matrix, vec3& screenPos);
+bool WorldToScreen0(vec3 pos, vec3& screen, float* matrix, float windowWidth, float windowHeight);
+bool WorldToScreen1(vec3 pos, vec3& screen, float* matrix, float windowWidth, float windowHeight);
+bool WorldToScreen2(vec3 pos, vec3& screen, float* matrix, float windowWidth, float windowHeight);
+bool DirectXWorldToScreen(vec3 point, vec3& screen, D3DX11Matricies* matrixies, float width, float height);

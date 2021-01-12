@@ -3,9 +3,15 @@
 #define gameVersion "2.3.0.64"
 
 #define playerListOffset 0x350A240
+#define playerCountOffset 0x350A248
 
 #define entitySignatureOffset 0x20
 #define playerNameOffset 0xB0
 #define entityUnitOffset 0x6D0
 #define unitCoordsOffset 0x818
-
+//#define unitVelocityOffset 0x15020 
+#define unitVelocityOffset 0x1f170 
+#define viewMatrixOffset 0x3F7BEB0
+#define teamIdOffset 0x230
+#define mLocalPlayerOffset 
+#define entitySignature 0x54454E44

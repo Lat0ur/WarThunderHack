@@ -8,6 +8,6 @@ typedef struct D3DXVECTOR3 {
 	FLOAT z;
 } D3DXVECTOR3, * LPD3DXVECTOR3;
 
-void detach(HMODULE dllHandle);
+void deattach(HMODULE dllHandle);
 void allocConsole();
 
