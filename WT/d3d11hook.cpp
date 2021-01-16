@@ -249,7 +249,6 @@ D3D11_HOOK_API void mainDettach(HMODULE hModule) {
 D3D11_HOOK_API void ImplHookDX11_Init(HMODULE hModule, HWND hwnd)
 {
 	GetClientRect(hwnd, &esp.rect);
-	printf("Windows Size: %d %d\r\n", esp.rect.right, esp.rect.bottom);
 	esp.screenCenterX = esp.rect.right / 2;
 	esp.screenCenterY = esp.rect.bottom / 2;
 	g_hWnd = (HWND)hwnd;

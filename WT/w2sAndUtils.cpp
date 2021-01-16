@@ -82,36 +82,6 @@ bool WorldToScreen0(vec3 pos, vec3& screen, float* matrix, float windowWidth, fl
 	return visible;
 }
 
-bool WorldToScreen1(vec3 pos, vec3& screen, float* matrix, float windowWidth, float windowHeight)
-{
-	//Matrix-vector Product, multiplying world(eye) coordinates by projection matrix = clipCoords
-	vec4 clipCoords;
-
-	clipCoords.w = pos.v[POS_FORWARD] * matrix[3] + pos.v[POS_VERTICAL] * matrix[7] + pos.v[POS_STRAFE] * matrix[11] + matrix[15];
-
-	bool visible = clipCoords.w >= 0.1f;
-	if (!visible)
-		clipCoords.w = -clipCoords.w;
-	else
-		clipCoords.w = clipCoords.w;
-
-	clipCoords.x = pos.v[POS_FORWARD] * matrix[0] + pos.v[POS_VERTICAL] * matrix[4] + pos.v[POS_STRAFE] * matrix[8] + matrix[12];
-	clipCoords.y = pos.v[POS_FORWARD] * matrix[1] + pos.v[POS_VERTICAL] * matrix[5] + pos.v[POS_STRAFE] * matrix[9] + matrix[13];
-
-	//perspective division, dividing by clip.W = Normalized Device Coordinates
-	vec3 NDC;
-	NDC.x = clipCoords.x / clipCoords.w;
-	NDC.y = clipCoords.y / clipCoords.w;
-
-	//convert NDC to screen coordinates
-	screen.x = (windowWidth / 2 * NDC.x) + (NDC.x + windowWidth / 2);
-	screen.y = -(windowHeight / 2 * NDC.y) + (NDC.y + windowHeight / 2);
-	screen.z = 0;
-	screen = screen.Normalize();
-	printf("%4.2f %4.2f %4.2f %4.2f -- %4.2f %4.2f\r\n", matrix[0], matrix[1], matrix[2], NDC.x, screen.x, screen.y);
-	return true;
-}
-
 //Both W2S functions produce the same output
 bool WorldToScreen2(vec3 pos, vec3& screen, float* matrix, float windowWidth, float windowHeight)
 {

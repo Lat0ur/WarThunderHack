@@ -90,7 +90,7 @@
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>C:\Users\Santa\Desktop\WT\wtProj\WT\WT\Libs;$(LibraryPath)</LibraryPath>
     <IncludePath>C:\Users\Santa\Desktop\WT\wtProj\WT\WT\MinHook\include;C:\Users\Santa\Desktop\WT\wtProj\WT\WT\ImGui;C:\Users\Santa\Desktop\WT\wtProj\WT\WT;$(IncludePath)</IncludePath>
-    <TargetName>WTT</TargetName>
+    <TargetName>WT</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -156,6 +156,9 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

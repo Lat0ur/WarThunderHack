@@ -9,19 +9,21 @@ class ESP {
 private:
 	int playerCount;
 	CBaseEntity* playerInstance;
+
 	uintptr_t instanceArray;
 
 public:
+	GameInfo* gameInfo;
 	uintptr_t exeBase;
 	float* viewMatrix;
 	RECT rect;
 	int screenCenterX, screenCenterY;
-	
+	bool playingFlag = false;
 	void update();
 	void draw();
-
+	float k = 4;	// distance scale coeff
 	int8_t mLocalPlayerTeamId = 1;
-	uintptr_t* mLocalPlayerUnit;
+	Unit* mLocalPlayerUnit;
 	vec3 mLocalPlayerCoords = { 1000, 1000, 1000 };
 	vec3 mLocalPlayerVelocity = { 0,0,0 };
 	bool drawTracers = false;

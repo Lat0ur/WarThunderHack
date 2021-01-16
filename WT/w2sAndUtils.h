@@ -25,11 +25,7 @@ class vec3
 {
 public:
 
-	union
-	{
-		struct { float x, y, z; };
-		float v[3];
-	};
+	float x, y, z;
 
 	vec3() { x = y = z = 0; }
 	vec3(const float x, const float y, const float z) : x(x), y(y), z(z) {}
@@ -41,14 +37,17 @@ public:
 	vec3& operator -= (const vec3& rhs) { return *this = *this - rhs; }
 	vec3& operator *= (const float& rhs) { return *this = *this * rhs; }
 	vec3& operator /= (const float& rhs) { return *this = *this / rhs; }
+	float operator[](int i) const {
+		return ((float*)this)[i];
+	}
+	float& operator[](int i);
 	float dot() const { return x * x + y * y + z * z; }
 	float Length() const { return sqrtf(dot()); }
 	vec3 Normalize() const { return *this * (1 / Length()); }
 	float Distance(const vec3& rhs) const { return (*this - rhs).Length(); }
-	/*vec3 calcAngle(vec3& source, vec3& target) {
-		vec3 angle = { 0, 0, 0 };
-		angle.x = atan2(sqrt ())
-	}*/
+	float calcAngle(vec3& vec1, vec3& vec2) {
+		return acos((vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z) / (vec1.Length() * vec2.Length()));
+	}
 };
 
 using Vector3 = vec3;

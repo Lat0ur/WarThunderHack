@@ -10,8 +10,12 @@
 #define entityUnitOffset 0x6D0
 #define unitCoordsOffset 0x818
 //#define unitVelocityOffset 0x15020 
-#define unitVelocityOffset 0x1f170 
+#define unitVelocityOffset 0x1e778 
 #define viewMatrixOffset 0x3F7BEB0
 #define teamIdOffset 0x230
 #define mLocalPlayerOffset 
 #define entitySignature 0x54454E44
+#define gameInfoOffset 0x34A5D30
+#define isInFlightOffset 0xD3
+
+#define bulletMuzzleVelocity 850

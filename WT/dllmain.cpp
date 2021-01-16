@@ -15,13 +15,19 @@ MasterClass MC;
 void mainCheatThread(uintptr_t exeBase, uintptr_t playerListBase, HMODULE dllHandle) {
     printf("mainCheatThread()\r\n");
 
-    
-    
     while (true){
-        if (GetAsyncKeyState(VK_DELETE))
+        if (GetAsyncKeyState(VK_INSERT))
             break;
         if (GetAsyncKeyState(VK_F9))
             esp.drawTracers != esp.drawTracers;
+        if (GetAsyncKeyState(VK_NUMPAD9)) {
+            esp.k += 1;
+            Sleep(500);
+        }
+        if (GetAsyncKeyState(VK_NUMPAD6)) {
+            esp.k -= 1;
+            Sleep(500);
+        }
         esp.update();
         Sleep(5);
     }
@@ -37,6 +43,8 @@ DWORD WINAPI Main(HMODULE dllHandle) {
 
     allocConsole();
 
+    printf("Windows Size: %d %d\r\n", esp.rect.right, esp.rect.bottom);
+
     MC.exeBase = (uintptr_t) GetModuleHandleA("aces.exe");
     printf("exeBase at %llx\r\n", MC.exeBase);
 
@@ -44,8 +52,13 @@ DWORD WINAPI Main(HMODULE dllHandle) {
     printf("playerListBase at %llx\r\n", playerListBase);
 
     MC.viewMatrix = MC.exeBase + viewMatrixOffset;
-    printf("rd3d11.viewMatrix at %llx\r\n", MC.viewMatrix);
+    printf("MC.viewMatrix at %llx\r\n", MC.viewMatrix);
+
+    MC.pToGameInfo = MC.exeBase + gameInfoOffset;
+    printf("MC.pToGameInfo = %llx\r\n", MC.pToGameInfo);
     
+    esp.gameInfo = *(GameInfo**)(MC.pToGameInfo);
+
     mainCheatThread(MC.exeBase, playerListBase, dllHandle);
 
     return 0;
