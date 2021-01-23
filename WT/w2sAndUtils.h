@@ -65,8 +65,6 @@ struct D3DX11Matricies {
 	DirectX::XMMATRIX ProjectionMatrix;
 };
 
-bool WorldToScreen_(vec3 worldPos, float* matrix, vec3& screenPos);
-bool WorldToScreen0(vec3 pos, vec3& screen, float* matrix, float windowWidth, float windowHeight);
-bool WorldToScreen1(vec3 pos, vec3& screen, float* matrix, float windowWidth, float windowHeight);
-bool WorldToScreen2(vec3 pos, vec3& screen, float* matrix, float windowWidth, float windowHeight);
+
 bool DirectXWorldToScreen(vec3 point, vec3& screen, D3DX11Matricies* matrixies, float width, float height);
+bool RotateDot(float* rotationMatrix, vec3 originDot, vec3& rotatedDot);

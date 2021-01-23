@@ -13,8 +13,11 @@
 MasterClass MC;
 
 void mainCheatThread(uintptr_t exeBase, uintptr_t playerListBase, HMODULE dllHandle) {
-    printf("mainCheatThread()\r\n");
+    
+    MC.InitD3DHook(dllHandle);
 
+    printf("mainCheatThread()\r\n");
+    printf("Windows Size: %d %d\r\n", esp.rect.right, esp.rect.bottom);
     while (true){
         if (GetAsyncKeyState(VK_INSERT))
             break;
@@ -22,14 +25,14 @@ void mainCheatThread(uintptr_t exeBase, uintptr_t playerListBase, HMODULE dllHan
             esp.drawTracers != esp.drawTracers;
         if (GetAsyncKeyState(VK_NUMPAD9)) {
             esp.k += 1;
-            Sleep(500);
+            Sleep(200);
         }
         if (GetAsyncKeyState(VK_NUMPAD6)) {
             esp.k -= 1;
-            Sleep(500);
+            Sleep(200);
         }
         esp.update();
-        Sleep(5);
+        Sleep(50);
     }
 
     mainDettach(dllHandle);
@@ -39,11 +42,8 @@ void mainCheatThread(uintptr_t exeBase, uintptr_t playerListBase, HMODULE dllHan
 
 DWORD WINAPI Main(HMODULE dllHandle) {
 
-    MC.InitD3DHook(dllHandle);
 
     allocConsole();
-
-    printf("Windows Size: %d %d\r\n", esp.rect.right, esp.rect.bottom);
 
     MC.exeBase = (uintptr_t) GetModuleHandleA("aces.exe");
     printf("exeBase at %llx\r\n", MC.exeBase);

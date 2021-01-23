@@ -1,32 +1,6 @@
 #include "w2sAndUtils.h"
 #include "DirectXMath.h"
 #include "stdio.h"
-/*
-bool WorldToScreen_(vec3 worldPos, float* matrix, vec3& screenPos) {
-	vec3 transform;
-	float xc, yc;
-	float px, py;
-	float z;
-
-	px = tan(nys.fov.x * PI / 360.0);
-	py = tan(nys.fov.y * PI / 360.0);
-
-	transform = Subtract(worldPos, nys.camPos);
-
-	xc = 1024 / 2.0; // 1024 is hardcoded because I'm testing with that resolution.
-	yc = 768 / 2.0; // 768 is hardcoded because I'm testing with that resolution.
-
-	z = DotProduct(transform, nys.vMatrix[0]);
-
-	if (z <= 0.1) {
-		return false;
-	}
-
-	screenPos.x = xc - DotProduct(transform, nys.vMatrix[1]) * xc / (z * px);
-	screenPos.y = yc - DotProduct(transform, nys.vMatrix[2]) * yc / (z * py);
-
-	return true;
-}*/
 
 vec3 Subtract(vec3 src, vec3 dst) {
 	vec3 diff;
@@ -48,76 +22,6 @@ vec3 Divide(vec3 src, float num) {
 float DotProduct(vec3 src, vec3 dst)
 {
 	return src.x * dst.x + src.y * dst.y + src.z * dst.z;
-}
-
-bool WorldToScreen0(vec3 pos, vec3& screen, float* matrix, float windowWidth, float windowHeight)
-{
-	 // Get matrix...
-
-	//printf("%4.2f %4.2f %4.2f", matrix[0], matrix[1], matrix[2]);
-
-	float _width = 1024;
-	float _height = 768;
-	float cW = pos.x * matrix[12] + pos.y * matrix[13] + pos.z * matrix[14] + matrix[15];
-
-
-	bool visible = cW >= 0.1f;
-	if (!visible)
-		cW = -1.0f / cW;
-	else
-		cW = 1.0f / cW;
-
-	float cX = pos.x * matrix[0] + pos.y * matrix[1] + pos.z * matrix[2] + matrix[3];
-	float cY = pos.x * matrix[4] + pos.y * matrix[5] + pos.z * matrix[6] + matrix[7];
-	float cZ = pos.x * matrix[8] + pos.y * matrix[9] + pos.z * matrix[10] + matrix[11];
-	
-	float nx = cX / cW;
-	float ny = cY / cW;
-	float nz = cZ / cW;
-	
-	screen.x = (_width / 2 * nx) + (nx + _width / 2);
-	screen.y = -(_height / 2 * ny) + (ny + _height / 2);
-	//printf("%4.2f * %4.2f, %4.2f * %4.2f, %4.2f * %4.2f, %4.2f = %4.2f\r\n", worldPosition.x, matrix[3], worldPosition.y, matrix[7], worldPosition.z, matrix[11], matrix[15], cW);
-	printf("%4.2f %4.2f %4.2f %4.2f -- %4.2f %4.2f\r\n", cW, cX, nx, matrix[3], screen.x, screen.y);
-	return visible;
-}
-
-//Both W2S functions produce the same output
-bool WorldToScreen2(vec3 pos, vec3& screen, float* matrix, float windowWidth, float windowHeight)
-{
-	float matrix2[4][4];
-
-	memcpy(matrix2, matrix, 16 * sizeof(float));
-
-	float mX = windowWidth / 2;
-	float mY = windowHeight / 2;
-
-	float w =
-		matrix2[0][3] * pos.x +
-		matrix2[1][3] * pos.y +
-		matrix2[2][3] * pos.z +
-		matrix2[3][3];
-
-	if (w < 0.65f)
-		return false;
-
-	float x =
-		matrix2[0][0] * pos.x +
-		matrix2[1][0] * pos.y +
-		matrix2[2][0] * pos.z +
-		matrix2[3][0];
-
-	float y =
-		matrix2[0][1] * pos.x +
-		matrix2[1][1] * pos.y +
-		matrix2[2][1] * pos.z +
-		matrix2[3][1];
-
-	screen.x = (mX + mX * x / w);
-	screen.y = (mY - mY * y / w);
-	screen.z = 0;
-
-	return true;
 }
 
 DirectX::XMMATRIX Multiplier = { 1, 0, 0, 0,
@@ -144,4 +48,12 @@ bool DirectXWorldToScreen(vec3 point, vec3& screen, D3DX11Matricies* matrixies, 
 	}
 		
 	return false;
+}
+
+bool RotateDot(float* rotationMatrix, vec3 originDot, vec3& rotatedDot) {
+	rotatedDot.x = originDot.x * rotationMatrix[0] + originDot.y * rotationMatrix[3] + originDot.z * rotationMatrix[6];
+	rotatedDot.y = originDot.x * rotationMatrix[1] + originDot.y * rotationMatrix[4] + originDot.z * rotationMatrix[7];
+	rotatedDot.z = originDot.x * rotationMatrix[2] + originDot.y * rotationMatrix[5] + originDot.z * rotationMatrix[8];
+
+	return true;
 }

@@ -21,6 +21,7 @@ public:
 	bool playingFlag = false;
 	void update();
 	void draw();
+	void draw3DBox(vec3 position, float* rotationMatrix, ImDrawList* draw, float distance);
 	float k = 4;	// distance scale coeff
 	int8_t mLocalPlayerTeamId = 1;
 	Unit* mLocalPlayerUnit;

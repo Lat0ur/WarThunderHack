@@ -62,3 +62,5 @@ public:
 };
 
 extern MasterClass MC;
+
+HWND FindMainWindow(DWORD dwPID);

@@ -13,9 +13,9 @@
 #define unitVelocityOffset 0x1e778 
 #define viewMatrixOffset 0x3F7BEB0
 #define teamIdOffset 0x230
-#define mLocalPlayerOffset 
+#define mLocalPlayerOffset 0x350A260
 #define entitySignature 0x54454E44
 #define gameInfoOffset 0x34A5D30
 #define isInFlightOffset 0xD3
-
-#define bulletMuzzleVelocity 850
+#define mainMenuLocalPlayerOffset 0x3505EE9
+#define bulletMuzzleVelocity 823
