@@ -51,7 +51,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(ProjectDir)\Libs;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)MinHook\lib;$(LibraryPath)</LibraryPath>
     <IncludePath>$(ProjectDir)\ImGui;$(ProjectDir)MinHook\include;$(IncludePath)</IncludePath>
     <TargetName>WT</TargetName>
   </PropertyGroup>
